@@ -1,34 +1,41 @@
 class Solution {
-public:
-    
-    bool dfs(vector<vector<char>>& board,string word,int x,int y,int index)
-    {
-        if (index==word.length())  return true;
-        if (x>=board.size()  || x<0 || y<0 || y>=board[0].size() || board[x][y]=='#' || board[x][y]!=word[index])  return false;
+private:
+    bool check(vector<vector<char>> &board, int r, int c, int currR, int currC, int ind, string word, vector<vector<int>> &visited){
+        if(ind == word.length()){
+            return true;
+        }
         
-        char c= board[x][y];
-        board[x][y]='#';
+        if(currR<0  ||  currC<0  ||  currR>=r  ||  currC>=c  ||  visited[currR][currC]== 1){
+            return false;
+        }
         
-        bool a= (dfs(board,word,x+1,y,index+1) || dfs(board,word,x-1,y,index+1) || dfs(board,word,x,y+1,index+1) || dfs(board,word,x,y-1,index+1));
-                 
-                 board[x][y]=c;
-                 return a;
+        if(word[ind] != board[currR][currC]){
+            return false;
+        }
         
+        visited[currR][currC]= 1;
+            
+        if(check(board, r, c, currR+1, currC, ind+1, word, visited)  ||  check(board, r, c, currR-1, currC, ind+1, word, visited)  ||  check(board, r, c, currR, currC-1, ind+1, word, visited)  ||  check(board, r, c, currR, currC+1, ind+1, word, visited)){
+            return true;
+        }
+        
+        visited[currR][currC]= 0;
+        return false;
     }
-                 
+    
+public:
     bool exist(vector<vector<char>>& board, string word) {
-        
-        for (int i=0;i<board.size();i++)
-        {
-            for (int j=0;j<board[0].size();j++)
-            {
-                if (board[i][j]==word[0])
-                {
-                    if (dfs(board,word,i,j,0))   return true;
+        int rows= board.size(), columns= board[0].size();
+        for(int i=0; i<rows; i++){
+            for(int j=0; j<columns; j++){
+                if(word[0]==board[i][j]){
+                    vector<vector<int>> visited(rows, vector<int>(columns, 0));
+                    if(check(board, rows, columns, i, j, 0, word, visited)){
+                        return true;
+                    }
                 }
             }
         }
         return false;
-        
     }
 };
