@@ -1,47 +1,71 @@
 class Trie {
 private:
-    bool check(string s1, string s2){
-        int len1= s1.length(), len2= s2.length();
-        if(len2>len1){
-            return false;
+    struct TrieNode{
+        char val;
+        TrieNode *child[26];
+        bool isEnd;
+    };
+    
+    TrieNode *root;
+    
+    TrieNode *getNode(int index){
+        TrieNode *newNode= new TrieNode;
+        newNode->val= 'a'+index;
+        newNode->isEnd= false;
+        for(int i=0; i<26; i++){
+            newNode->child[i]= NULL;
         }
-        int i=0;
-        while(s1[i]==s2[i]){
-            i++;
-            if(i>=len2){
-                return true;
-            }
-        }
-        return false;
+        return newNode;
     }
+    
 public:
-    vector<string> s;
+    Trie() {
+        ios_base::sync_with_stdio(false);
+        cin.tie(NULL);
+        root= getNode('/'-'a');
+    }
     
     void insert(string word) {
-        s.push_back(word);
+        TrieNode *curr= root;
+        int index;
+        for(char ch: word){
+            index= ch-'a';
+            if(curr->child[index]==NULL){
+                curr->child[index]= getNode(index);
+            }
+            curr= curr->child[index];
+        }
+        curr->isEnd= true;
     }
     
     bool search(string word) {
-        for(string st: s){
-            if(st==word){
-                return true;
+        TrieNode *curr= root;
+        int index;
+        for(char ch: word){
+            index= ch-'a';
+            if(curr->child[index]==NULL){
+                return false;
             }
+            curr= curr->child[index];
         }
-        return false;
+        return curr->isEnd;
     }
     
     bool startsWith(string prefix) {
-        for(string st: s){
-            if(check(st, prefix)){
-                return true;
+        TrieNode *curr= root;
+        int index;
+        for(char ch: prefix){
+            index= ch-'a';
+            if(curr->child[index]==NULL){
+                return false;
             }
+            curr= curr->child[index];
         }
-        return false;
+        return true;
     }
 };
 
-/*
- *
+/**
  * Your Trie object will be instantiated and called as such:
  * Trie* obj = new Trie();
  * obj->insert(word);
