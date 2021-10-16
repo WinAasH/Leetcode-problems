@@ -11,23 +11,31 @@
  */
 class Solution {
 private:
-    TreeNode* mergeBoth(TreeNode* r1, TreeNode* r2){
-        if(r1== NULL  &&  r2== NULL){
-            return NULL;
-        }
-        if(r1== NULL){
+    TreeNode* merge(TreeNode* r1, TreeNode* r2){
+        if(!r1){
             return r2;
         }
-        if(r2== NULL){
+        
+        if(!r2){
             return r1;
         }
-        TreeNode* curr= new TreeNode(r1->val+r2->val);
-        curr->left= mergeBoth(r1->left, r2->left);
-        curr->right= mergeBoth(r1->right, r2->right);
-        return curr;
+        
+        TreeNode *root= new TreeNode(r1->val + r2->val);
+        root->left= merge(r1->left, r2->left);
+        root->right= merge(r1->right, r2->right);
+        
+        return root;
     }
 public:
     TreeNode* mergeTrees(TreeNode* root1, TreeNode* root2) {
-        return mergeBoth(root1, root2);
+        if(!root1){
+            return root2;
+        }
+        
+        if(!root2){
+            return root1;
+        }
+        
+        return merge(root1, root2);
     }
 };
