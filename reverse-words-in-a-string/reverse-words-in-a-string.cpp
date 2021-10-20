@@ -1,35 +1,23 @@
 class Solution {
 public:
     string reverseWords(string s) {
-        vector<string> v;
+        stack<string> v;
         string curr= "";
-        bool flag= false, first= true;
         for(int i=0; i<s.length(); i++){
-            if(s[i]==' '  &&  flag){
-                if(first){
-                    v.push_back(curr);
-                    flag= false;
-                    first= false;
-                    curr= "";
-                    continue;
-                }
-                curr+= " ";
-                v.push_back(curr);
-                curr= "";
-                flag= false;
-                continue;
+            while(i<s.length()  &&  s[i]==' '){
+                i++;
             }
-            else if(s[i]!=' '){
-                flag= true;
-                curr+= s[i];   
+            while(i<s.length()  &&  s[i]!=' '){
+                curr+= s[i];
+                i++;
             }
+            v.push(curr);
+            curr= "";
         }
-        curr+= " ";
-        v.push_back(curr);
-        reverse(v.begin(), v.end());
         string result= "";
-        for(auto it: v){
-            result+= it;
+        while(!v.empty()){
+            result+= v.top()+" ";
+            v.pop();
         }
         int i=0;
         while(result[i]==' '){
