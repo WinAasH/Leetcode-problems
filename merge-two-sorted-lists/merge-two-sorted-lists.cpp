@@ -13,13 +13,14 @@ public:
     ListNode* mergeTwoLists(ListNode* l1, ListNode* l2) {
         if(!l1){
             return l2;
-        }   
-        
+        }
         if(!l2){
             return l1;
         }
+        ListNode *curr= new ListNode(NULL);
         
-        ListNode *curr= new ListNode(NULL), *head;
+        ListNode *head= curr;
+        
         if(l1->val < l2->val){
             curr->next= l1;
             l1= l1->next;
@@ -30,8 +31,6 @@ public:
             l2= l2->next;
             curr= curr->next;
         }
-        
-        head= curr;
         
         while(l1  &&  l2){
             if(l1->val < l2->val){
@@ -46,13 +45,13 @@ public:
             }
         }
         
-        if(!l1){
-            curr->next= l2;
-        }
-        else{
+        if(l1){
             curr->next= l1;
         }
+        if(l2){
+            curr->next= l2;
+        }
         
-        return head;
+        return head->next;
     }
 };
