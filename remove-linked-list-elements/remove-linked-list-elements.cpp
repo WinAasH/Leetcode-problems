@@ -20,12 +20,12 @@ public:
         }
         
         ListNode *curr= head, *prev= head;
-        
         while(curr){
-            if(curr->val == val){
+            while(curr  &&  curr->val==val){
                 prev->next= curr->next;
                 curr= prev;
             }
+            
             prev= curr;
             curr= curr->next;
         }
