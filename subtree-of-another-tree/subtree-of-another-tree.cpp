@@ -12,24 +12,14 @@
 class Solution {
 private:
     bool check(TreeNode *curr, TreeNode *currSub){
-        if(!currSub  &&  !curr) return true;
-        if(!currSub) return false;
-        if(!curr) return false;
-        if(curr->val != currSub->val) return false;
-        
-        return check(curr->left, currSub->left)  &&  check(curr->right, currSub->right);
+        if(currSub==NULL  ||  curr==NULL) return currSub==NULL  &&  curr==NULL;
+        else if(curr->val == currSub->val) return check(curr->left, currSub->left)  &&  check(curr->right, currSub->right);
+        else return false;
     }
 public:
     bool isSubtree(TreeNode* root, TreeNode* subRoot) {
-        if(!subRoot) return true;
-        
         if(!root) return false;
-        
-        if(root->val == subRoot->val){
-            bool temp= check(root, subRoot);
-            return (temp  ||  isSubtree(root->left, subRoot)  ||  isSubtree(root->right, subRoot));
-        }
-        
-        return (isSubtree(root->left, subRoot)  ||  isSubtree(root->right, subRoot));
+        else if(check(root, subRoot))  return true;
+        else    return (isSubtree(root->left, subRoot)  ||  isSubtree(root->right, subRoot));
     }
 };
