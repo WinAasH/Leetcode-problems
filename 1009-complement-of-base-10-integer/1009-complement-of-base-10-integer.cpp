@@ -4,10 +4,9 @@ public:
         if(n==0) return 1;
         int ans= 0, currPower= 0;
         while(n){
-            if((n&1)==0){
-                int curr= 1<<currPower;
-                ans+= curr;
-            }
+            int curr= 1<<currPower;
+            int power= (n&1)==0?1:0;
+            ans+= curr*power;
             currPower++;
             n>>= 1;
         }
