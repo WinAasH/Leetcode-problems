@@ -8,8 +8,8 @@ public:
             mp[trips[i][1]]+= trips[i][0];
             mp[trips[i][2]]-= trips[i][0];
         }
-        for(auto it: mp){
-            curr+= it.second;
+        for(auto it= mp.begin(); it!=mp.end(); it++){
+            curr+= it->second;
             if(curr>capacity)   return false;
         }
         return true;
