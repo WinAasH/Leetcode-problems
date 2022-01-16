@@ -1,35 +1,24 @@
 class Solution {
-private:
-    int findClose(vector<int> &seats, int i){
-        int l= i-1, r= i+1, ans= 1;
-        while(l>=0  &&  r<seats.size()){
-            if(seats[l]==1  ||  seats[r]==1)    break;
-            l--;
-            r++;
-            ans++;
-        }
-        if(l<0){
-            while(r<seats.size()){
-                if(seats[r]==1) break;
-                r++;
-                ans++;
-            }
-        }
-        if(r==seats.size()){
-            while(l>=0){
-                if(seats[l]==1) break;
-                l--;
-                ans++;
-            }
-        }
-        return ans;
-    }
 public:
     int maxDistToClosest(vector<int>& seats) {
-        int ans= INT_MIN;
-        for(int i=0; i<seats.size(); i++){
-            if(seats[i]==0) ans= max(ans, findClose(seats, i));
+        int n= seats.size(), currDis, res= INT_MIN, l= -1, r= -1;
+        vector<int> ans(n, -1), left(n, -1), right(n, -1);
+        for(int i=0; i<n; i++){
+            if(seats[i]==1) l= i;
+            else    left[i]= l;
         }
-        return ans;
+        for(int i=n-1; i>=0; i--){
+            if(seats[i]==1) r= i;
+            else    right[i]= r;
+        }
+        for(int i=0; i<n; i++){
+            if(seats[i]==0){
+                int lDis= left[i]==-1? INT_MAX: i- left[i];
+                int rDis= right[i]==-1? INT_MAX: right[i]-i;
+                currDis= min(lDis, rDis);
+                if(currDis>res) res= currDis;
+            }
+        }
+        return res;
     }
 };
