@@ -20,28 +20,10 @@ private:
     }
 public:
     vector<int> getAllElements(TreeNode* root1, TreeNode* root2) {
-        vector<int> v1, v2, v;
-        inorder(root1, v1);
-        inorder(root2, v2);
-        int c1= 0, c2= 0, n1= v1.size(), n2= v2.size();
-        while(c1<n1  &&  c2<n2){
-            if(v1[c1]<v2[c2]){
-                v.push_back(v1[c1]);
-                c1++;
-            }
-            else{
-                v.push_back(v2[c2]);
-                c2++;
-            }
-        }
-        while(c1<n1){
-            v.push_back(v1[c1]);
-            c1++;
-        }
-        while(c2<n2){
-            v.push_back(v2[c2]);
-            c2++;
-        }
+        vector<int> v;
+        inorder(root1, v);
+        inorder(root2, v);
+        sort(v.begin(), v.end());
         return v;
     }
 };
