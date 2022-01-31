@@ -4,9 +4,7 @@ public:
         int ans= 0;
         for(int i=0; i<accounts.size(); i++){
             int temp= 0;
-            for(int j=0; j<accounts[0].size(); j++){
-                temp+= accounts[i][j];
-            }
+            for(int j=0; j<accounts[0].size(); j++) temp+= accounts[i][j];
             ans= max(temp, ans);
         }
         return ans;
