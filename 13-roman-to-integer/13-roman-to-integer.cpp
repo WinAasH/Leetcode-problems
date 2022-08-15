@@ -30,7 +30,7 @@ public:
                 else    ans+= 100;
             }
             else if(s[i]=='D')  ans+= 500;
-            else if(s[i]=='M')  ans+= 1000;
+            else    ans+= 1000;
         }
         return ans;
     }
