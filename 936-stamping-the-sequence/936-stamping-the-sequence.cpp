@@ -1,41 +1,42 @@
 class Solution {
+private:
+    int fetchStampIndex(string t, string s, int tLen, int sLen){
+        for(int i=0; i<=(tLen- sLen); i++){
+            int j= 0;
+            int ind= i;
+            bool isNonStarChar= false;
+            while(j<sLen  &&  ind<tLen  &&  (t[ind]=='*'  ||  t[ind]==s[j])){
+                if(t[ind]!='*') isNonStarChar= true;
+                j++;
+                ind++;
+            }
+            if(j==sLen  &&  isNonStarChar) return i;
+        }
+        return -1;
+    }
+    
+    
 public:
-    bool match(string &a,string &b){
-        if(a.length() != b.length()) 
-            return false;
-        for(int i=0;i<a.length();i++)
-            if(a.at(i) != b.at(i) && b.at(i) != '?') 
-                return false;
-        return true;
-    }
-    
-    bool allWild(string &s){
-        for(int i=0;i<s.length();i++)
-            if(s.at(i) != '?') 
-                return false;
-        return true;
-    }
-    
     vector<int> movesToStamp(string stamp, string target) {
-        int n = target.length(), m = stamp.length();
+        int sLen= stamp.size();
+        int tLen= target.size();
+        string newtarget= "";
         vector<int> ans;
-        string str ; 
-        bool foundMatch = true;
-        while(foundMatch){ 
-            foundMatch = false;
-            for(int i=0;i<n-m+1;i++){
-                str = target.substr(i,m);            
-                if(allWild(str)) continue; 
-                if(match(stamp,str)){
-                    foundMatch = true;
-                    ans.push_back(i);
-                    for(int j=0;j<m;j++) target[i+j] = '?'; 
+        for(int i=0; i<tLen; i++)  newtarget+= '*';
+        while(newtarget!=target){
+            cout<< target<< " ";
+            int stampIndex= fetchStampIndex(target, stamp, tLen, sLen);
+            if(stampIndex<0){
+                return {};
+            }
+            else{
+                for(int i=0; i<stamp.size(); i++){
+                    target[i+stampIndex]= '*';
                 }
             }
+            ans.push_back(stampIndex);
         }
-        if(!allWild(target))  ans.clear();
-        if(ans.size() > 10*n) ans.clear();
-        reverse(ans.begin(),ans.end());
+        reverse(ans.begin(), ans.end());
         return ans;
     }
 };
