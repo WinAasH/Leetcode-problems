@@ -24,7 +24,6 @@ public:
         vector<int> ans;
         for(int i=0; i<tLen; i++)  newtarget+= '*';
         while(newtarget!=target){
-            cout<< target<< " ";
             int stampIndex= fetchStampIndex(target, stamp, tLen, sLen);
             if(stampIndex<0){
                 return {};
