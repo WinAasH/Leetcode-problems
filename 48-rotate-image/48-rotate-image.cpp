@@ -18,7 +18,7 @@ public:
     void rotate(vector<vector<int>>& matrix) {
         int n=matrix[0].size();
         cout<<n;
-        for(int i=0;i<n/2;i++){
+        for(int i=0;i<=(n-1)/2;i++){
             rot(matrix,i,n);
         }
     }
