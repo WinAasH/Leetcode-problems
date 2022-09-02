@@ -21,12 +21,8 @@ public:
             int len= q.size();
             for(int i=0; i<len; i++){
                 TreeNode* temp= q.front();
-                if(temp->left){
-                    q.push(temp->left);
-                }
-                if(temp->right){
-                    q.push(temp->right);
-                }
+                if(temp->left)  q.push(temp->left);
+                if(temp->right) q.push(temp->right);
                 q.pop();
                 curr+= temp->val;
             }
