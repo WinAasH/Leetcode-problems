@@ -15,16 +15,10 @@ private:
             return;
         }
         if(temp-k>=0){
-            cout<< temp-k<< " ";
-            int oldCurr= curr;
-            curr+= (temp-k);
-            makeAll(n, k, currLen, curr, ans);
-            curr= oldCurr;
+            makeAll(n, k, currLen, curr+temp-k, ans);
         }
         if(temp+k<=9){
-            cout<< temp+k<< " ";
-            curr+= (temp+k);
-            makeAll(n, k, currLen, curr, ans);
+            makeAll(n, k, currLen, curr+temp+k, ans);
         }
     }
 public:
