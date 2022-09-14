@@ -16,7 +16,7 @@ public:
         if(root==NULL) return 0;
         a[root->val]++;
         int ans= dfs(root->left,a) + dfs(root->right,a) , odd =0;
-        for(int i=1;i<=9;i++) if(a[i]%2) odd++;
+        if(root->right==NULL and root->left==NULL) for(int i=1;i<=9;i++) if(a[i]%2) odd++;
         a[root->val]--;
         if(root->right==NULL and root->left==NULL and odd<=1) ans++;
         return ans;
