@@ -21,7 +21,7 @@ public:
             return s;
         }
         int n= s.length();
-        for (int i = 0; i < n - 1; ++i) {
+        for (int i=0; i<n-1; i++) {
             if (abs(s[i] - s[i + 1]) == 32)
                 return  makeGood(s.substr(0, i) + s.substr(i + 2));
         }
